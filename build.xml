@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<project name="Junit Test" default="run" basedir=".">
+
+     <target name="cleanup">
+        <delete dir="bin" />
+        <delete dir="lib" />
+        <delete dir="src" />
+        <delete dir="reports" />    
+    </target>   
+
+    <target name="create" depends="cleanup">
+        <mkdir dir="bin" />
+        <mkdir dir="lib" />
+        <mkdir dir="src" />
+        <mkdir dir="report" />
+    </target>
+
+    <target name="copy" depends="create">
+        <copy overwrite="true" todir="lib">
+            <fileset dir="C:\Junit" includes="*.jar"></fileset>
+        </copy>
+        <copy overwrite="true" todir="src">
+            <fileset dir="D:\Test-SVN\Junit\src\com\testcases" includes="*.java"></fileset>
+        </copy>
+    </target>
+
+    <path id="classpath">
+        <path location="lib">
+            <fileset dir="lib" includes="*.jar"></fileset>
+        </path>
+        <path location="bin"></path>
+    </path>
+
+    <target name="compile" depends="copy">
+        <javac includeantruntime="treu" srcdir="src" destdir="bin" description="Compile Java Files"></javac>
+    </target>
+    
+    <target name="run" depends="comile">
+        <!--java classpathref="classpath" classname="TestRunner" fork="true"></java>-->
+        <junit haltonfailur="false" printsummar"true">
+            <classpath refid= "classpath"></classpath>
+            <test name="TestBeforeAfter" todir="reports"></test>
+            <test name="TestCsv" todir="reports"></test>
+            <test name="TestDataBase" todir="reports"></test>
+            <test name="TestError" todir="reports"></test>
+            <test name="TestJunit" todir="reports"></test>
+            <formatter type="plain"/>
+            <!--formatter type="xml"/>
+        </junit>
+    </target>
+
+
+</project>
